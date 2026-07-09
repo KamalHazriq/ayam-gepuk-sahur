@@ -12,16 +12,20 @@
   <meta property="og:title" content="Ayam Gepuk Sahur (The Champ KL)">
   <meta property="og:description" content="Ayam gepuk & sambal homemade di Sentul, KL. Buka sampai 3 pagi. Dine-in & delivery — order terus WhatsApp!">
   <meta property="og:url" content="https://kamalhazriq.github.io/ayam-gepuk-sahur/">
-  <meta property="og:image" content="https://kamalhazriq.github.io/ayam-gepuk-sahur/thechampkl-logo.jpg">
+  <meta property="og:image" content="https://kamalhazriq.github.io/ayam-gepuk-sahur/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ms_MY">
   <meta property="og:site_name" content="Ayam Gepuk Sahur">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ayam Gepuk Sahur (The Champ KL)">
   <meta name="twitter:description" content="Ayam gepuk & sambal homemade di Sentul, KL. Buka sampai 3 pagi. Order terus WhatsApp!">
-  <meta name="twitter:image" content="https://kamalhazriq.github.io/ayam-gepuk-sahur/thechampkl-logo.jpg">
+  <meta name="twitter:image" content="https://kamalhazriq.github.io/ayam-gepuk-sahur/og-image.png">
   <link rel="canonical" href="https://kamalhazriq.github.io/ayam-gepuk-sahur/">
 
-  <link rel="icon" type="image/jpeg" href="thechampkl-logo.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -452,6 +456,7 @@
     }
     .open-badge.is-open { background: #b9f3c0; color: #0c6b25; }
     .open-badge.is-closed { background: #ffd2c9; color: #a02407; }
+    .open-badge.is-soon { background: var(--yellow); color: #6b4a00; }
 
     .hours-table { width: 100%; border-collapse: collapse; font-weight: 600; }
     .hours-table td { padding: .5rem 0; border-bottom: 2px dashed rgba(0,0,0,.15); }
@@ -848,6 +853,7 @@
         d_closed: "Tutup",
         addr_label: "Alamat:",
         open_now: "Buka Sekarang", closed_now: "Tutup",
+        opens_tonight: "Buka Malam Ini 8:30 PM", opens_tomorrow: "Buka Esok 8:30 PM",
         contact_title: "Hubungi Kami",
         contact_sub: "Order, tanya, atau sekadar tegur — kami sedia melayan.",
         contact_wa: "WhatsApp Kami",
@@ -885,6 +891,7 @@
         d_closed: "Closed",
         addr_label: "Address:",
         open_now: "Open Now", closed_now: "Closed",
+        opens_tonight: "Opens Tonight 8:30 PM", opens_tomorrow: "Opens Tomorrow 8:30 PM",
         contact_title: "Contact Us",
         contact_sub: "Order, ask, or just say hi — we're happy to help.",
         contact_wa: "WhatsApp Us",
@@ -1035,12 +1042,20 @@
       const carryOver = day !== 1 && mins < 3 * 60; // previous day must be Mon–Sat
       return eveningOpen || carryOver;
     }
+    function badgeState(d) {
+      if (isOpenAt(d)) return "open";
+      // Closed: Sunday (after the 3 AM carryover) reopens Monday night;
+      // any other day reopens the same evening at 8:30 PM.
+      return d.getDay() === 0 ? "tomorrow" : "tonight";
+    }
     function renderOpenBadge() {
       const badge = document.getElementById("open-badge");
-      const open = isOpenAt(new Date());
-      badge.textContent = open ? t("open_now") : t("closed_now");
-      badge.classList.toggle("is-open", open);
-      badge.classList.toggle("is-closed", !open);
+      const state = badgeState(new Date());
+      const key = { open: "open_now", tonight: "opens_tonight", tomorrow: "opens_tomorrow" }[state];
+      badge.textContent = t(key);
+      badge.classList.toggle("is-open", state === "open");
+      badge.classList.toggle("is-soon", state === "tonight");
+      badge.classList.toggle("is-closed", state === "tomorrow");
     }
     setInterval(renderOpenBadge, 60 * 1000);
 
