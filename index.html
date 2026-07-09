@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayam Gepuk Sahur (The Champ KL) — Ayam Gepuk Sedap di Sentul, Buka Sampai 3 Pagi</title>
+  <title>Ayam Gepuk Sahur</title>
   <meta name="description" content="Ayam Gepuk Sahur (The Champ KL) — ayam gepuk & sambal homemade di Sentul, Kuala Lumpur. Buka Isnin–Sabtu 8:30 malam hingga 3 pagi. Dine-in & delivery, order terus melalui WhatsApp.">
   <meta name="theme-color" content="#FE8824">
 
@@ -373,7 +373,7 @@
     }
     .menu-card-body { padding: var(--s-2) var(--s-2) var(--s-3); display: flex; flex-direction: column; gap: .4rem; flex: 1; }
     .menu-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: .6rem; }
-    .menu-card h3 { font-size: 1.08rem; }
+    .menu-card h3 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: .02em; }
     .menu-price {
       background: var(--yellow); border: 2.5px solid var(--black);
       border-radius: 999px; padding: .15rem .7rem;
@@ -381,6 +381,13 @@
       flex: none;
     }
     .menu-desc { font-size: .9rem; color: #5c4a33; flex: 1; }
+    .menu-chips { display: flex; flex-wrap: wrap; gap: .3rem; flex: 1; align-content: flex-start; list-style: none; }
+    .menu-chips li {
+      font-size: .74rem; font-weight: 700;
+      background: var(--cream); color: #5c4a33;
+      border: 1.5px solid rgba(0,0,0,.3); border-radius: 999px;
+      padding: .08rem .55rem; white-space: nowrap;
+    }
     .menu-spice { font-size: .85rem; font-weight: 700; color: #c22f10; }
 
     .menu-simple { border-radius: var(--radius-sm); }
@@ -447,16 +454,20 @@
     .hours-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; }
     .hours-head h3 { font-size: 1.25rem; }
     .open-badge {
-      font-weight: 800; font-size: .9rem;
-      border: 2.5px solid var(--black); border-radius: 999px;
-      padding: .3rem .9rem; display: inline-flex; align-items: center; gap: .45rem;
+      font-weight: 800; font-size: 1.05rem;
+      border: 3px solid var(--black); border-radius: 999px;
+      padding: .45rem 1.15rem; display: inline-flex; align-items: center; gap: .55rem;
+      box-shadow: var(--shadow-sticker);
     }
     .open-badge::before {
-      content: ""; width: .6em; height: .6em; border-radius: 50%; background: currentColor;
+      content: ""; width: .65em; height: .65em; border-radius: 50%; background: currentColor;
+      animation: badge-pulse 1.6s ease-in-out infinite;
     }
-    .open-badge.is-open { background: #b9f3c0; color: #0c6b25; }
-    .open-badge.is-closed { background: #ffd2c9; color: #a02407; }
-    .open-badge.is-soon { background: var(--yellow); color: #6b4a00; }
+    @keyframes badge-pulse { 50% { opacity: .3; } }
+    @media (prefers-reduced-motion: reduce) { .open-badge::before { animation: none; } }
+    .open-badge.is-open { background: #0e7a2b; color: #fff; }
+    .open-badge.is-closed { background: #c2300a; color: #fff; }
+    .open-badge.is-soon { background: var(--yellow); color: var(--black); }
 
     .hours-table { width: 100%; border-collapse: collapse; font-weight: 600; }
     .hours-table td { padding: .5rem 0; border-bottom: 2px dashed rgba(0,0,0,.15); }
@@ -906,28 +917,28 @@
     const IMGS = ["images/food-1.webp", "images/food-2.webp", "images/food-3.webp"];
     const MENU = {
       normal: [
-        { name: "Set A", price: "RM10.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, air", en: "Rice, chicken, fried kangkung, sambal, drink" } },
-        { name: "Set B", price: "RM12.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, tempe, tauhu, air", en: "Rice, chicken, fried kangkung, sambal, tempeh, tofu, drink" } },
-        { name: "Set C", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, air", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, drink" } },
-        { name: "Set D (Complete Set)", price: "RM18.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, chicken skin, pedal, air", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, chicken skin, gizzard, drink" } },
-        { name: "Set A + Telur Dadar Crispy", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, air", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, drink" } },
-        { name: "Set Large A (Ayam Double)", price: "RM16.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, air", en: "Rice, 2pcs chicken, fried kangkung, sambal, drink" } },
-        { name: "Set Large B (Ayam Double)", price: "RM18.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, tempe, tauhu, air", en: "Rice, 2pcs chicken, fried kangkung, sambal, tempeh, tofu, drink" } }
+        { name: "Set A", price: "RM10.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, sirap ais", en: "Rice, chicken, fried kangkung, sambal, sirap ais" } },
+        { name: "Set B", price: "RM12.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } },
+        { name: "Set C", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, sirap ais" } },
+        { name: "Set D (Complete Set)", price: "RM18.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, chicken skin, pedal, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, chicken skin, gizzard, sirap ais" } },
+        { name: "Set A + Telur Dadar Crispy", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, sirap ais", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, sirap ais" } },
+        { name: "Set Large A (Ayam Double)", price: "RM16.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, sirap ais" } },
+        { name: "Set Large B (Ayam Double)", price: "RM18.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } }
       ],
       crispy: [
-        { name: "Set Crispy A", price: "RM11.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, air", en: "Rice, chicken, fried kangkung, sambal, drink" } },
-        { name: "Set Crispy B", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, tempe, tauhu, air", en: "Rice, chicken, fried kangkung, sambal, tempeh, tofu, drink" } },
-        { name: "Set Crispy C", price: "RM15.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, air", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, drink" } },
-        { name: "Set Crispy D (Complete Set)", price: "RM19.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, chicken skin, pedal, air", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, chicken skin, gizzard, drink" } },
-        { name: "Set Crispy A + Telur Dadar Crispy", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, air", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, drink" } },
-        { name: "Set Crispy Large A (Ayam Double)", price: "RM17.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, air", en: "Rice, 2pcs chicken, fried kangkung, sambal, drink" } },
-        { name: "Set Crispy Large B (Ayam Double)", price: "RM19.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, tempe, tauhu, air", en: "Rice, 2pcs chicken, fried kangkung, sambal, tempeh, tofu, drink" } }
+        { name: "Set Crispy A", price: "RM11.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, sirap ais", en: "Rice, chicken, fried kangkung, sambal, sirap ais" } },
+        { name: "Set Crispy B", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } },
+        { name: "Set Crispy C", price: "RM15.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, sirap ais" } },
+        { name: "Set Crispy D (Complete Set)", price: "RM19.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, chicken skin, pedal, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, chicken skin, gizzard, sirap ais" } },
+        { name: "Set Crispy A + Telur Dadar Crispy", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, sirap ais", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, sirap ais" } },
+        { name: "Set Crispy Large A (Ayam Double)", price: "RM17.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, sirap ais" } },
+        { name: "Set Crispy Large B (Ayam Double)", price: "RM19.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } }
       ],
       keli: [
-        { name: "Set Keli A", price: "RM10.90", spicy: true, desc: { ms: "Nasi, ikan keli, sambal, kangkung goreng, air", en: "Rice, catfish, sambal, fried kangkung, drink" } },
-        { name: "Set Keli B", price: "RM12.90", spicy: true, desc: { ms: "Nasi, ikan keli, sambal, kangkung goreng, tempe & tauhu, air", en: "Rice, catfish, sambal, fried kangkung, tempeh & tofu, drink" } },
-        { name: "Set Keli C", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ikan keli, sambal, kangkung goreng, kobis goreng, tempe & tauhu, air", en: "Rice, catfish, sambal, fried kangkung, fried cabbage, tempeh & tofu, drink" } },
-        { name: "Set Combo (Ayam + Keli)", price: "RM23.90", spicy: true, desc: { ms: "Nasi, ikan keli, ayam 1pcs, sambal, kangkung goreng, kobis goreng, hati & pedal, chicken skin, tempe & tauhu, air", en: "Rice, catfish, 1pc chicken, sambal, fried kangkung, fried cabbage, liver & gizzard, chicken skin, tempeh & tofu, drink" } }
+        { name: "Set Keli A", price: "RM10.90", spicy: true, desc: { ms: "Nasi, ikan keli, sambal, kangkung goreng, sirap ais", en: "Rice, catfish, sambal, fried kangkung, sirap ais" } },
+        { name: "Set Keli B", price: "RM12.90", spicy: true, desc: { ms: "Nasi, ikan keli, sambal, kangkung goreng, tempe & tauhu, sirap ais", en: "Rice, catfish, sambal, fried kangkung, tempeh & tofu, sirap ais" } },
+        { name: "Set Keli C", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ikan keli, sambal, kangkung goreng, kobis goreng, tempe & tauhu, sirap ais", en: "Rice, catfish, sambal, fried kangkung, fried cabbage, tempeh & tofu, sirap ais" } },
+        { name: "Set Combo (Ayam + Keli)", price: "RM23.90", spicy: true, desc: { ms: "Nasi, ikan keli, ayam 1pcs, sambal, kangkung goreng, kobis goreng, hati & pedal, chicken skin, tempe & tauhu, sirap ais", en: "Rice, catfish, 1pc chicken, sambal, fried kangkung, fried cabbage, liver & gizzard, chicken skin, tempeh & tofu, sirap ais" } }
       ],
       addon: [
         { name: "Sambal Extra", price: "RM2.50", spicy: true },
@@ -1015,7 +1026,10 @@
         const img = cat.photos
           ? `<img src="${IMGS[i % IMGS.length]}" alt="${item.name} — Ayam Gepuk Sahur" width="640" height="400" loading="lazy">`
           : "";
-        const desc = item.desc ? `<p class="menu-desc">${item.desc[lang] || item.desc.ms}</p>` : `<p class="menu-desc"></p>`;
+        const titleCase = (s) => s.trim().split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+        const desc = item.desc
+          ? `<ul class="menu-chips">${(item.desc[lang] || item.desc.ms).split(",").map(part => `<li>${titleCase(part)}</li>`).join("")}</ul>`
+          : `<p class="menu-desc"></p>`;
         const spice = item.spicy ? `<span class="menu-spice">${t("spicy")}</span>` : "";
         return `<article class="menu-card${cat.photos ? "" : " menu-simple"}">
           ${img}
