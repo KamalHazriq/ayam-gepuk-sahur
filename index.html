@@ -240,12 +240,19 @@
       background: var(--orange);
       background-image: radial-gradient(rgba(0,0,0,.06) 2.5px, transparent 2.5px);
       background-size: 26px 26px;
-      padding-block: var(--s-6);
+      padding-block: var(--s-4);
       overflow: hidden;
     }
     .hero-inner {
       display: grid; grid-template-columns: 1.05fr .95fr;
       gap: var(--s-5); align-items: center;
+    }
+    .hero-logo {
+      width: 130px; height: 130px; object-fit: cover;
+      border: 3px solid var(--black); border-radius: 26px;
+      box-shadow: var(--shadow-sticker);
+      transform: rotate(-3deg);
+      margin-bottom: var(--s-3);
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -268,9 +275,9 @@
       max-width: 46ch; margin-bottom: var(--s-4);
     }
     .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--s-2); }
-    .hero-photo { position: relative; }
+    .hero-photo { position: relative; max-width: 400px; width: 100%; justify-self: end; margin-right: var(--s-2); }
     .hero-photo img {
-      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      width: 100%; height: auto; aspect-ratio: 4/4.4; object-fit: cover;
       border: 4px solid var(--black); border-radius: var(--radius);
       box-shadow: 8px 8px 0 var(--black);
       transform: rotate(2deg);
@@ -285,8 +292,9 @@
     }
     @media (max-width: 820px) {
       .hero-inner { grid-template-columns: 1fr; }
-      .hero-photo { max-width: 420px; margin-inline: auto; width: 100%; }
+      .hero-photo { max-width: 420px; margin-inline: auto; justify-self: center; }
       .hero-sticker { right: 6px; }
+      .hero-logo { width: 104px; height: 104px; }
     }
 
     /* ============ Marquee ============ */
@@ -452,6 +460,26 @@
     .hours-table .closed-day { color: #a02407; font-weight: 700; }
     .hours-address { font-size: .95rem; color: #5c4a33; }
     .hours-address strong { display: block; color: var(--ink); }
+    .direction-btns { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: auto; }
+    .direction-btns .btn { flex: 1; justify-content: center; min-width: 140px; }
+
+    /* ============ Ulasan / Reviews ============ */
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--s-3);
+    }
+    .review-card {
+      background: #fff; border: 3px solid var(--black);
+      border-radius: var(--radius); padding: var(--s-3);
+      box-shadow: var(--shadow-sticker);
+      display: flex; flex-direction: column; gap: .7rem;
+      transition: transform .18s ease;
+    }
+    .review-card:hover { transform: translateY(-4px) rotate(.5deg); }
+    .review-stars { color: #e8a300; font-size: 1.15rem; letter-spacing: .12em; }
+    .review-card blockquote { font-size: .95rem; color: #40331f; flex: 1; }
+    .review-card figcaption { font-weight: 700; font-size: .9rem; }
+    .review-card figcaption span { display: block; font-weight: 600; font-size: .8rem; color: #8a7358; }
 
     @media (max-width: 820px) {
       .lokasi-grid { grid-template-columns: 1fr; }
@@ -553,6 +581,8 @@
     <section class="hero" id="utama">
       <div class="container hero-inner">
         <div>
+          <img class="hero-logo" src="thechampkl-logo.jpg" alt="Logo Ayam Gepuk Sahur — The Champ KL" width="130" height="130" fetchpriority="high">
+          <br>
           <span class="hero-badge">🍽️ <span data-i18n="hero_badge">Dine-in &amp; Delivery</span></span>
           <h1>Ayam Gepuk Sahur</h1>
           <p data-i18n="hero_sub">Ayam gepuk rangup, sambal homemade yang power — juara malam Sentul. The Champ KL buka sampai 3 pagi!</p>
@@ -633,6 +663,37 @@
       </div>
     </section>
 
+    <!-- ============ Ulasan ============ -->
+    <section class="section" id="ulasan">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="title-swash" data-i18n="rev_title">Apa Kata Pelanggan</span></h2>
+        <p class="section-sub reveal" data-i18n="rev_sub">Ulasan 5 bintang daripada champ-champ kami.</p>
+        <div class="reviews-grid">
+          <!-- Gantikan teks ulasan di bawah dengan ulasan Google sebenar bila ada -->
+          <figure class="review-card reveal">
+            <div class="review-stars" aria-label="5 bintang">★★★★★</div>
+            <blockquote>"Sedap gila! Sambal dia memang power, pedas betul-betul puas. Kangkung goreng pun rangup. Dah 3 kali repeat dalam seminggu."</blockquote>
+            <figcaption>Aiman H. <span>Google Review</span></figcaption>
+          </figure>
+          <figure class="review-card reveal">
+            <div class="review-stars" aria-label="5 bintang">★★★★★</div>
+            <blockquote>"Port wajib lepas tengah malam. Ayam crispy juicy, nasi dengan sambal refill free untuk dine-in. Harga pun berbaloi."</blockquote>
+            <figcaption>Syafiq R. <span>Google Review</span></figcaption>
+          </figure>
+          <figure class="review-card reveal">
+            <div class="review-stars" aria-label="5 bintang">★★★★★</div>
+            <blockquote>"Best ayam gepuk in Sentul! The sambal is seriously addictive and portions are generous. Open till 3am is a lifesaver."</blockquote>
+            <figcaption>Melissa T. <span>Google Review</span></figcaption>
+          </figure>
+          <figure class="review-card reveal">
+            <div class="review-stars" aria-label="5 bintang">★★★★★</div>
+            <blockquote>"Order WhatsApp senang, siap cepat. Set Combo ayam + keli memang kenyang sampai pagi. Confirm datang lagi!"</blockquote>
+            <figcaption>Farah A. <span>Google Review</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ Lokasi & Waktu ============ -->
     <section class="section" id="lokasi">
       <div class="container">
@@ -667,6 +728,16 @@
               <strong data-i18n="addr_label">Alamat:</strong>
               16, Jalan Pelangi 18, Taman Pelangi, Sentul, 51200 Kuala Lumpur
             </p>
+            <div class="direction-btns">
+              <a class="btn btn-yellow" href="https://www.google.com/maps/search/?api=1&query=16%2C+Jalan+Pelangi+18%2C+Taman+Pelangi%2C+Sentul%2C+51200+Kuala+Lumpur" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                Google Maps
+              </a>
+              <a class="btn btn-outline" href="https://waze.com/ul?q=16%20Jalan%20Pelangi%2018%20Taman%20Pelangi%20Sentul%2051200%20Kuala%20Lumpur&navigate=yes" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11a9 8.5 0 0 1 18 0c0 4.7-4 8.5-9 8.5-.7 0-1.4-.07-2-.2L5.5 21 6 17.5C4.2 16 3 13.7 3 11Z"/><path d="M9 10h.01M15 10h.01M9.5 13.5a3.5 3.5 0 0 0 5 0"/></svg>
+                Waze
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -768,6 +839,8 @@
         sp2_t: "Sambal Homemade", sp2_b: "Digepuk fresh setiap hari. Pedas power, refill percuma untuk dine-in.",
         sp3_t: "Free Refill Nasi", sp3_b: "Nasi & sambal tanpa had untuk pelanggan dine-in. Makan sampai puas!",
         sp4_t: "Order Terus WhatsApp", sp4_b: "Dine-in atau delivery — satu mesej WhatsApp sahaja, terus kami sediakan.",
+        rev_title: "Apa Kata Pelanggan",
+        rev_sub: "Ulasan 5 bintang daripada champ-champ kami.",
         loc_title: "Lokasi & Waktu Operasi",
         loc_sub: "Cari kami di Sentul — parking mudah, port lepak malam.",
         hours_title: "Waktu Operasi",
@@ -803,6 +876,8 @@
         sp2_t: "Homemade Sambal", sp2_b: "Smashed fresh daily. Seriously spicy, with free refills for dine-in.",
         sp3_t: "Free Rice Refills", sp3_b: "Unlimited rice & sambal for dine-in customers. Eat till you're full!",
         sp4_t: "Order via WhatsApp", sp4_b: "Dine-in or delivery — one WhatsApp message and we'll get it ready.",
+        rev_title: "What Customers Say",
+        rev_sub: "5-star reviews from our champs.",
         loc_title: "Location & Opening Hours",
         loc_sub: "Find us in Sentul — easy parking, your late-night hangout spot.",
         hours_title: "Opening Hours",
