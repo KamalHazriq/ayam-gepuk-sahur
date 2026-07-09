@@ -259,7 +259,7 @@
       margin-bottom: var(--s-3);
     }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: .5rem;
+      display: flex; width: fit-content; align-items: center; gap: .5rem;
       background: var(--black); color: var(--yellow);
       font-weight: 700; font-size: .9rem;
       padding: .4rem 1rem; border-radius: 999px;
@@ -389,6 +389,20 @@
       padding: .08rem .55rem; white-space: nowrap;
     }
     .menu-spice { font-size: .85rem; font-weight: 700; color: #c22f10; }
+    .menu-card-foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-top: .35rem; }
+    .menu-order {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--font); font-weight: 700; font-size: .85rem;
+      background: var(--wa-green); color: var(--black);
+      border: 2.5px solid var(--black); border-radius: 999px;
+      padding: .3rem .9rem; text-decoration: none;
+      box-shadow: 3px 3px 0 var(--black);
+      transition: transform .15s ease, box-shadow .15s ease;
+      white-space: nowrap;
+    }
+    .menu-order:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--black); }
+    .menu-order:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--black); }
+    .menu-order svg { width: 1em; height: 1em; flex: none; }
 
     .menu-simple { border-radius: var(--radius-sm); }
     .menu-simple .menu-card-body { padding-block: var(--s-2); }
@@ -576,7 +590,7 @@
         <a href="#tentang" data-i18n="nav_about">Tentang</a>
         <a href="#lokasi" data-i18n="nav_location">Lokasi</a>
         <a href="#hubungi" data-i18n="nav_contact">Hubungi</a>
-        <a class="btn btn-yellow btn-order" href="https://api.whatsapp.com/send/?phone=60183805646&text=nakorderGepuks" target="_blank" rel="noopener" data-i18n="order_now">Order Sekarang</a>
+        <a class="btn btn-yellow btn-order" href="https://api.whatsapp.com/send/?phone=60183805646&text=Hi!%20Nak%20order%20%F0%9F%8D%97" target="_blank" rel="noopener" data-i18n="order_now">Order Sekarang</a>
       </nav>
 
       <div class="lang-toggle" role="group" aria-label="Bahasa / Language">
@@ -584,7 +598,7 @@
         <button type="button" id="lang-en" aria-pressed="false">EN</button>
       </div>
 
-      <a class="btn btn-yellow btn-order" href="https://api.whatsapp.com/send/?phone=60183805646&text=nakorderGepuks" target="_blank" rel="noopener" data-i18n="order_now">Order Sekarang</a>
+      <a class="btn btn-yellow btn-order" href="https://api.whatsapp.com/send/?phone=60183805646&text=Hi!%20Nak%20order%20%F0%9F%8D%97" target="_blank" rel="noopener" data-i18n="order_now">Order Sekarang</a>
 
       <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav" aria-label="Buka menu navigasi">
         <span></span><span></span><span></span>
@@ -598,12 +612,11 @@
       <div class="container hero-inner">
         <div>
           <img class="hero-logo" src="thechampkl-logo.jpg" alt="Logo Ayam Gepuk Sahur — The Champ KL" width="130" height="130" fetchpriority="high">
-          <br>
           <span class="hero-badge">🍽️ <span data-i18n="hero_badge">Dine-in &amp; Delivery</span></span>
           <h1>Ayam Gepuk Sahur</h1>
           <p data-i18n="hero_sub">Ayam gepuk rangup, sambal homemade yang power — juara malam Sentul. The Champ KL buka sampai 3 pagi!</p>
           <div class="hero-ctas">
-            <a class="btn btn-green" href="https://api.whatsapp.com/send/?phone=60183805646&text=nakorderGepuks" target="_blank" rel="noopener">
+            <a class="btn btn-green" href="https://api.whatsapp.com/send/?phone=60183805646&text=Hi!%20Nak%20order%20%F0%9F%8D%97" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
               <span data-i18n="hero_cta">Order Melalui WhatsApp</span>
             </a>
@@ -730,12 +743,7 @@
             </div>
             <table class="hours-table">
               <tbody>
-                <tr><td data-i18n="d_mon">Isnin</td><td>8:30 PM – 3:00 AM</td></tr>
-                <tr><td data-i18n="d_tue">Selasa</td><td>8:30 PM – 3:00 AM</td></tr>
-                <tr><td data-i18n="d_wed">Rabu</td><td>8:30 PM – 3:00 AM</td></tr>
-                <tr><td data-i18n="d_thu">Khamis</td><td>8:30 PM – 3:00 AM</td></tr>
-                <tr><td data-i18n="d_fri">Jumaat</td><td>8:30 PM – 3:00 AM</td></tr>
-                <tr><td data-i18n="d_sat">Sabtu</td><td>8:30 PM – 3:00 AM</td></tr>
+                <tr><td data-i18n="d_monsat">Isnin – Sabtu</td><td>8:30 PM – 3:00 AM</td></tr>
                 <tr><td data-i18n="d_sun">Ahad</td><td class="closed-day" data-i18n="d_closed">Tutup</td></tr>
               </tbody>
             </table>
@@ -764,7 +772,7 @@
         <h2 class="section-title reveal" data-i18n="contact_title">Hubungi Kami</h2>
         <p class="section-sub reveal" data-i18n="contact_sub">Order, tanya, atau sekadar tegur — kami sedia melayan.</p>
         <div class="hubungi-cards reveal">
-          <a class="btn btn-green" href="https://api.whatsapp.com/send/?phone=60183805646&text=nakorderGepuks" target="_blank" rel="noopener">
+          <a class="btn btn-green" href="https://api.whatsapp.com/send/?phone=60183805646&text=Hi!%20Nak%20order%20%F0%9F%8D%97" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
             <span data-i18n="contact_wa">WhatsApp Kami</span>
           </a>
@@ -826,7 +834,7 @@
   </footer>
 
   <!-- ============ Floating WhatsApp ============ -->
-  <a class="wa-float" href="https://api.whatsapp.com/send/?phone=60183805646&text=nakorderGepuks" target="_blank" rel="noopener" aria-label="Order melalui WhatsApp">
+  <a class="wa-float" href="https://api.whatsapp.com/send/?phone=60183805646&text=Hi!%20Nak%20order%20%F0%9F%8D%97" target="_blank" rel="noopener" aria-label="Order melalui WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
   </a>
 
@@ -859,7 +867,7 @@
         loc_title: "Lokasi & Waktu Operasi",
         loc_sub: "Cari kami di Sentul — parking mudah, port lepak malam.",
         hours_title: "Waktu Operasi",
-        d_mon: "Isnin", d_tue: "Selasa", d_wed: "Rabu", d_thu: "Khamis", d_fri: "Jumaat", d_sat: "Sabtu", d_sun: "Ahad",
+        d_monsat: "Isnin – Sabtu", d_sun: "Ahad",
         d_closed: "Tutup",
         addr_label: "Alamat:",
         open_now: "Buka Sekarang", closed_now: "Tutup",
@@ -869,6 +877,8 @@
         contact_wa: "WhatsApp Kami",
         ft_links: "Pautan Pantas", ft_follow: "Ikuti Kami",
         spicy: "Pedas 🌶️",
+        order_item: "Order",
+        wa_msg: "Hi! Nak order",
         cat_normal: "Set Ayam Gepuk", cat_crispy: "Set Ayam Crispy", cat_keli: "Set Ikan Keli", cat_addon: "Add-On", cat_drinks: "Minuman"
       },
       en: {
@@ -897,7 +907,7 @@
         loc_title: "Location & Opening Hours",
         loc_sub: "Find us in Sentul — easy parking, your late-night hangout spot.",
         hours_title: "Opening Hours",
-        d_mon: "Monday", d_tue: "Tuesday", d_wed: "Wednesday", d_thu: "Thursday", d_fri: "Friday", d_sat: "Saturday", d_sun: "Sunday",
+        d_monsat: "Monday – Saturday", d_sun: "Sunday",
         d_closed: "Closed",
         addr_label: "Address:",
         open_now: "Open Now", closed_now: "Closed",
@@ -907,6 +917,8 @@
         contact_wa: "WhatsApp Us",
         ft_links: "Quick Links", ft_follow: "Follow Us",
         spicy: "Spicy 🌶️",
+        order_item: "Order",
+        wa_msg: "Hi! I'd like to order",
         cat_normal: "Set Ayam Gepuk", cat_crispy: "Set Ayam Crispy", cat_keli: "Set Ikan Keli", cat_addon: "Add-Ons", cat_drinks: "Drinks"
       }
     };
@@ -920,7 +932,7 @@
         { name: "Set B", price: "RM12.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } },
         { name: "Set C", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, sirap ais" } },
         { name: "Set D (Complete Set)", price: "RM18.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, chicken skin, pedal, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, chicken skin, gizzard, sirap ais" } },
-        { name: "Set A + Telur Dadar Crispy", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, sirap ais", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, sirap ais" } },
+        { name: "Set A + Telur Dadar", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, sirap ais", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, sirap ais" } },
         { name: "Set Large A (Ayam Double)", price: "RM16.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, sirap ais" } },
         { name: "Set Large B (Ayam Double)", price: "RM18.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } }
       ],
@@ -929,7 +941,7 @@
         { name: "Set Crispy B", price: "RM13.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } },
         { name: "Set Crispy C", price: "RM15.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, sirap ais" } },
         { name: "Set Crispy D (Complete Set)", price: "RM19.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, kubis goreng, sambal, tempe, tauhu, chicken skin, pedal, sirap ais", en: "Rice, chicken, fried kangkung, fried cabbage, sambal, tempeh, tofu, chicken skin, gizzard, sirap ais" } },
-        { name: "Set Crispy A + Telur Dadar Crispy", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, sirap ais", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, sirap ais" } },
+        { name: "Set Crispy A + Telur Dadar", price: "RM14.90", spicy: true, desc: { ms: "Nasi, ayam, kangkung goreng, telur dadar, sambal, sirap ais", en: "Rice, chicken, fried kangkung, crispy omelette, sambal, sirap ais" } },
         { name: "Set Crispy Large A (Ayam Double)", price: "RM17.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, sirap ais" } },
         { name: "Set Crispy Large B (Ayam Double)", price: "RM19.90", spicy: true, desc: { ms: "Nasi, ayam 2pcs, kangkung goreng, sambal, tempe, tauhu, sirap ais", en: "Rice, 2pcs chicken, fried kangkung, sambal, tempeh, tofu, sirap ais" } }
       ],
@@ -1029,7 +1041,11 @@
         const desc = item.desc
           ? `<ul class="menu-chips">${(item.desc[lang] || item.desc.ms).split(",").map(part => `<li>${titleCase(part)}</li>`).join("")}</ul>`
           : `<p class="menu-desc"></p>`;
-        const spice = item.spicy ? `<span class="menu-spice">${t("spicy")}</span>` : "";
+        const spice = item.spicy ? `<span class="menu-spice">${t("spicy")}</span>` : "<span></span>";
+        const waUrl = `https://api.whatsapp.com/send/?phone=60183805646&text=${encodeURIComponent(`${t("wa_msg")} ${item.name} (${item.price})`)}`;
+        const orderBtn = `<a class="menu-order" href="${waUrl}" target="_blank" rel="noopener" aria-label="Order ${item.name} melalui WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.5 11.815 11.815 0 0 0 12.05 0Z"/></svg>
+            ${t("order_item")}</a>`;
         return `<article class="menu-card${cat.photos ? "" : " menu-simple"}">
           ${img}
           <div class="menu-card-body">
@@ -1038,7 +1054,7 @@
               <span class="menu-price">${item.price}</span>
             </div>
             ${desc}
-            ${spice}
+            <div class="menu-card-foot">${spice}${orderBtn}</div>
           </div>
         </article>`;
       }).join("");
