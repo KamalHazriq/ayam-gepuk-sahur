@@ -388,6 +388,13 @@
       border: 1.5px solid rgba(0,0,0,.3); border-radius: 999px;
       padding: .08rem .55rem; white-space: nowrap;
     }
+    .menu-chips li.chip-new {
+      background: var(--yellow); color: var(--black);
+      border: 1.5px solid var(--black);
+      box-shadow: 2px 2px 0 var(--black);
+      padding-left: .5rem;
+    }
+    .menu-chips li.chip-new::before { content: "✨ "; }
     .menu-spice { font-size: .85rem; font-weight: 700; color: #c22f10; }
     .menu-card-foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-top: .35rem; }
 
@@ -654,16 +661,45 @@
     }
     .cart-form { display: flex; flex-direction: column; gap: .7rem; }
     .cart-form label { font-weight: 700; font-size: .9rem; display: flex; flex-direction: column; gap: .3rem; }
-    .cart-form input, .cart-form textarea {
+    .cart-form input, .cart-form textarea, .cart-form select {
       font-family: var(--font); font-size: .95rem; font-weight: 500;
       border: 2.5px solid var(--black); border-radius: var(--radius-sm);
       padding: .6rem .8rem; background: #fff; color: var(--ink);
       resize: vertical;
     }
-    .cart-form input:focus, .cart-form textarea:focus { outline: 3px solid var(--orange); outline-offset: 1px; }
+    .cart-form input:focus, .cart-form textarea:focus, .cart-form select:focus { outline: 3px solid var(--orange); outline-offset: 1px; }
+    .cart-form input.is-invalid, .cart-form select.is-invalid { border-color: #c2300a; }
+    .cart-field-row { display: flex; gap: .6rem; }
+    .cart-field-row > * { flex: 1; min-width: 0; }
+    .cart-field-error {
+      font-size: .82rem; font-weight: 700; color: #c2300a;
+      margin-top: -.2rem; display: none;
+    }
+    .cart-field-error.show { display: block; }
     .cart-foot { padding: var(--s-2) var(--s-3) var(--s-3); border-top: 3px solid var(--black); display: flex; flex-direction: column; gap: .6rem; }
     .cart-foot .btn { justify-content: center; width: 100%; }
+    .cart-foot .btn.is-disabled { opacity: .45; pointer-events: none; }
     .cart-clear { background: none; border: 0; text-decoration: underline; font-weight: 700; cursor: pointer; font-family: var(--font); color: #5c4a33; }
+
+    /* ============ Confirm modal ============ */
+    .confirm-overlay {
+      position: fixed; inset: 0; z-index: 210;
+      background: rgba(0,0,0,.5);
+      display: none; align-items: center; justify-content: center;
+      padding: var(--s-2);
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-box {
+      background: var(--cream); border: 3px solid var(--black);
+      border-radius: var(--radius); box-shadow: var(--shadow-sticker);
+      padding: var(--s-3); max-width: 360px; width: 100%;
+      text-align: center;
+    }
+    .confirm-box h3 { font-size: 1.15rem; margin-bottom: .5rem; }
+    .confirm-box p { color: #5c4a33; font-weight: 600; margin-bottom: var(--s-2); }
+    .confirm-box .confirm-item { font-weight: 800; color: var(--ink); }
+    .confirm-actions { display: flex; gap: .6rem; }
+    .confirm-actions .btn { flex: 1; justify-content: center; }
   </style>
 </head>
 <body>
@@ -953,16 +989,21 @@
           </label>
           <label>
             <span data-i18n="cart_time">Masa (Pickup)</span>
-            <input type="text" id="cart-f-time" name="time" data-i18n-placeholder="cart_time_ph" autocomplete="off">
+            <div class="cart-field-row">
+              <select id="cart-f-day" name="day" aria-label="Hari"></select>
+              <input type="time" id="cart-f-time" name="time" autocomplete="off">
+            </div>
           </label>
+          <p class="cart-field-error" id="cart-time-error"></p>
           <label>
             <span data-i18n="cart_address">Alamat (Delivery)</span>
             <textarea id="cart-f-address" name="address" rows="2" data-i18n-placeholder="cart_address_ph"></textarea>
           </label>
           <label>
             <span data-i18n="cart_phone">No. Telefon</span>
-            <input type="tel" id="cart-f-phone" name="phone" required autocomplete="tel">
+            <input type="tel" id="cart-f-phone" name="phone" required autocomplete="tel" data-i18n-placeholder="cart_phone_ph">
           </label>
+          <p class="cart-field-error" id="cart-phone-error"></p>
         </form>
       </div>
       <div class="cart-foot">
@@ -971,6 +1012,18 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
           <span data-i18n="cart_send">Hantar Order via WhatsApp</span>
         </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Add-to-cart confirmation ============ -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h3 id="confirm-title" data-i18n="confirm_title">Tambah ke troli?</h3>
+      <p><span class="confirm-item" id="confirm-item-name"></span> — <span id="confirm-item-price"></span></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-outline" id="confirm-cancel-btn" data-i18n="confirm_no">Batal</button>
+        <button type="button" class="btn btn-green" id="confirm-yes-btn" data-i18n="confirm_yes">Ya, Tambah!</button>
       </div>
     </div>
   </div>
@@ -1028,10 +1081,20 @@
         cart_address: "Alamat (Delivery)",
         cart_address_ph: "Alamat penuh untuk delivery (jika ada)",
         cart_phone: "No. Telefon",
+        cart_phone_ph: "cth: 0123456789",
         cart_send: "Hantar Order via WhatsApp",
         cart_clear: "Kosongkan troli",
         cart_fill_required: "Sila isi Nama dan No. Telefon dahulu.",
-        cart_list_label: "List order:"
+        cart_list_label: "List order:",
+        confirm_title: "Tambah ke troli?",
+        confirm_yes: "Ya, Tambah!",
+        confirm_no: "Batal",
+        day_mon: "Isnin", day_tue: "Selasa", day_wed: "Rabu", day_thu: "Khamis",
+        day_fri: "Jumaat", day_sat: "Sabtu", day_sun: "Ahad",
+        err_phone_invalid: "Nombor telefon tidak sah. Cth: 0123456789",
+        err_time_required: "Sila pilih hari & masa pickup.",
+        err_closed_sun: "Kami tutup pada hari Ahad. Sila pilih hari lain.",
+        err_closed_hours: "Di luar waktu operasi (Isnin–Sabtu, 8:30 PM–3:00 AM). Sila pilih masa lain."
       },
       en: {
         skip: "Skip to content",
@@ -1083,10 +1146,20 @@
         cart_address: "Address (Delivery)",
         cart_address_ph: "Full address for delivery (if any)",
         cart_phone: "Phone Number",
+        cart_phone_ph: "e.g. 0123456789",
         cart_send: "Send Order via WhatsApp",
         cart_clear: "Clear cart",
         cart_fill_required: "Please fill in Name and Phone Number first.",
-        cart_list_label: "List order:"
+        cart_list_label: "List order:",
+        confirm_title: "Add to cart?",
+        confirm_yes: "Yes, Add!",
+        confirm_no: "Cancel",
+        day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday",
+        day_fri: "Friday", day_sat: "Saturday", day_sun: "Sunday",
+        err_phone_invalid: "Invalid phone number. e.g. 0123456789",
+        err_time_required: "Please select a pickup day & time.",
+        err_closed_sun: "We're closed on Sundays. Please pick another day.",
+        err_closed_hours: "Outside operating hours (Mon–Sat, 8:30 PM–3:00 AM). Please choose another time."
       }
     };
 
@@ -1166,6 +1239,7 @@
       renderTabs();
       renderMenu();
       renderOpenBadge();
+      populateDaySelect();
       renderCart();
     }
 
@@ -1204,13 +1278,19 @@
     function renderMenu() {
       const grid = document.getElementById("menu-grid");
       const cat = CATS.find((c) => c.id === activeCat);
+      const normalize = (s) => s.trim().toLowerCase().replace(/\s+/g, " ");
+      const baseline = MENU[activeCat][0];
+      const baseParts = baseline && baseline.desc ? (baseline.desc[lang] || baseline.desc.ms).split(",").map(normalize) : [];
       grid.innerHTML = MENU[activeCat].map((item, i) => {
         const img = cat.photos
           ? `<img src="${IMGS[i % IMGS.length]}" alt="${item.name} — Ayam Gepuk Sahur" width="640" height="400" loading="lazy">`
           : "";
         const titleCase = (s) => s.trim().split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
         const desc = item.desc
-          ? `<ul class="menu-chips">${(item.desc[lang] || item.desc.ms).split(",").map(part => `<li>${titleCase(part)}</li>`).join("")}</ul>`
+          ? `<ul class="menu-chips">${(item.desc[lang] || item.desc.ms).split(",").map(part => {
+              const isNew = i > 0 && !baseParts.includes(normalize(part));
+              return `<li${isNew ? ' class="chip-new"' : ""}>${titleCase(part)}</li>`;
+            }).join("")}</ul>`
           : `<p class="menu-desc"></p>`;
         const spice = item.spicy ? `<span class="menu-spice">${t("spicy")}</span>` : "<span></span>";
         const orderBtn = `<button type="button" class="menu-add" data-cat="${activeCat}" data-name="${item.name.replace(/"/g, '&quot;')}" data-price="${item.price}" aria-label="${t("add_to_cart")} ${item.name}">
@@ -1230,15 +1310,7 @@
       }).join("");
       grid.querySelectorAll(".menu-add").forEach((btn) => {
         btn.addEventListener("click", () => {
-          addToCart(btn.dataset.cat, btn.dataset.name, btn.dataset.price);
-          const label = btn.querySelector(".menu-add-label");
-          const original = t("add_to_cart");
-          btn.classList.add("is-added");
-          label.textContent = t("added_to_cart");
-          setTimeout(() => {
-            btn.classList.remove("is-added");
-            label.textContent = original;
-          }, 900);
+          requestAddToCart(btn.dataset.cat, btn.dataset.name, btn.dataset.price);
         });
       });
     }
@@ -1247,12 +1319,13 @@
     // Opens Mon–Sat 20:30, closes 03:00 the NEXT day. Sunday: no opening,
     // but Saturday night carries into Sunday 00:00–03:00.
     // => Monday 00:00–03:00 is CLOSED (no Sunday-night session).
-    function isOpenAt(d) {
-      const day = d.getDay(); // 0 Sun … 6 Sat
-      const mins = d.getHours() * 60 + d.getMinutes();
+    function isOpenAtDayMins(day, mins) {
       const eveningOpen = day >= 1 && day <= 6 && mins >= 20 * 60 + 30;
       const carryOver = day !== 1 && mins < 3 * 60; // previous day must be Mon–Sat
       return eveningOpen || carryOver;
+    }
+    function isOpenAt(d) {
+      return isOpenAtDayMins(d.getDay(), d.getHours() * 60 + d.getMinutes());
     }
     function badgeState(d) {
       if (isOpenAt(d)) return "open";
@@ -1273,10 +1346,12 @@
 
     /* ================= Cart ================= */
     const WA_PHONE = "60183805646";
+    const DAY_KEYS = ["day_sun", "day_mon", "day_tue", "day_wed", "day_thu", "day_fri", "day_sat"];
     let cart = [];
     try { cart = JSON.parse(localStorage.getItem("ags-cart") || "[]"); } catch (e) { cart = []; }
     const cartForm = {
       name: localStorage.getItem("ags-cart-name") || "",
+      day: localStorage.getItem("ags-cart-day") || String(new Date().getDay()),
       time: localStorage.getItem("ags-cart-time") || "",
       address: localStorage.getItem("ags-cart-address") || "",
       phone: localStorage.getItem("ags-cart-phone") || ""
@@ -1288,6 +1363,42 @@
       const n = parseFloat(String(price).replace(/[^0-9.]/g, ""));
       return isNaN(n) ? 0 : n;
     }
+
+    /* ---- Add-to-cart confirmation ---- */
+    let pendingAdd = null;
+    const confirmOverlay = document.getElementById("confirm-overlay");
+    function requestAddToCart(cat, name, price) {
+      pendingAdd = { cat, name, price };
+      document.getElementById("confirm-item-name").textContent = name;
+      document.getElementById("confirm-item-price").textContent = price;
+      confirmOverlay.classList.add("open");
+    }
+    function closeConfirm() {
+      confirmOverlay.classList.remove("open");
+      pendingAdd = null;
+    }
+    document.getElementById("confirm-cancel-btn").addEventListener("click", closeConfirm);
+    confirmOverlay.addEventListener("click", (e) => { if (e.target === confirmOverlay) closeConfirm(); });
+    document.getElementById("confirm-yes-btn").addEventListener("click", () => {
+      if (!pendingAdd) return;
+      const { cat, name, price } = pendingAdd;
+      addToCart(cat, name, price);
+      closeConfirm();
+      const btn = document.querySelector(`.menu-add[data-cat="${cat}"][data-name="${CSS.escape(name)}"]`);
+      if (btn) {
+        const label = btn.querySelector(".menu-add-label");
+        const original = t("add_to_cart");
+        btn.classList.add("is-added");
+        label.textContent = t("added_to_cart");
+        setTimeout(() => {
+          btn.classList.remove("is-added");
+          label.textContent = original;
+        }, 900);
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && confirmOverlay.classList.contains("open")) closeConfirm();
+    });
 
     function addToCart(cat, name, price) {
       const existing = cart.find((it) => it.cat === cat && it.name === name);
@@ -1362,13 +1473,73 @@
       buildSendLink();
     }
 
+    function formatTime12(hhmm) {
+      if (!hhmm) return "";
+      const [h, m] = hhmm.split(":").map(Number);
+      const period = h >= 12 ? "PM" : "AM";
+      const h12 = ((h + 11) % 12) + 1;
+      return `${h12}:${String(m).padStart(2, "0")} ${period}`;
+    }
+
+    /* ---- Pickup day/time validation (mirrors the open-hours logic above) ---- */
+    function validateTimeSelection() {
+      const errEl = document.getElementById("cart-time-error");
+      if (!cartForm.time) {
+        errEl.textContent = t("err_time_required");
+        errEl.classList.add("show");
+        return false;
+      }
+      const day = Number(cartForm.day);
+      const [h, m] = cartForm.time.split(":").map(Number);
+      const mins = h * 60 + m;
+      if (day === 0 && !(mins < 3 * 60)) {
+        errEl.textContent = t("err_closed_sun");
+        errEl.classList.add("show");
+        return false;
+      }
+      if (!isOpenAtDayMins(day, mins)) {
+        errEl.textContent = t("err_closed_hours");
+        errEl.classList.add("show");
+        return false;
+      }
+      errEl.classList.remove("show");
+      return true;
+    }
+
+    /* ---- Phone number validation (Malaysian mobile format) ---- */
+    function validatePhoneNumber() {
+      const errEl = document.getElementById("cart-phone-error");
+      const digits = cartForm.phone.replace(/[^0-9]/g, "");
+      const ok = /^(60)?01[0-46-9]\d{6,7}$/.test(digits);
+      if (!ok) {
+        errEl.textContent = t("err_phone_invalid");
+        errEl.classList.add("show");
+      } else {
+        errEl.classList.remove("show");
+      }
+      return ok;
+    }
+
+    function updateSendButtonState() {
+      const timeOk = validateTimeSelection();
+      const phoneOk = cartForm.phone.trim() ? validatePhoneNumber() : (document.getElementById("cart-phone-error").classList.remove("show"), true);
+      const sendBtn = document.getElementById("cart-send-btn");
+      const ready = timeOk && phoneOk && cart.length > 0;
+      sendBtn.classList.toggle("is-disabled", !ready);
+      fTime.classList.toggle("is-invalid", !timeOk);
+      fDay.classList.toggle("is-invalid", !timeOk);
+      return { timeOk, phoneOk };
+    }
+
     function buildSendLink() {
       const lines = cart.map((it, i) => `${i + 1}. ${it.name} x${it.qty} - RM${(priceToNumber(it.price) * it.qty).toFixed(2)}`);
+      const dayLabel = t(DAY_KEYS[Number(cartForm.day)]);
+      const timeLabel = cartForm.time ? `${dayLabel}, ${formatTime12(cartForm.time)}` : "";
       const msg = [
         t("wa_msg") + " ayam gepuk sahur",
         "",
         `Name: ${cartForm.name}`,
-        `Time(pickup): ${cartForm.time}`,
+        `Time(pickup): ${timeLabel}`,
         `Address (Delivery): ${cartForm.address}`,
         `Phone Number: ${cartForm.phone}`,
         "",
@@ -1378,6 +1549,7 @@
         `Total: RM${cartTotal().toFixed(2)}`
       ].join("\n");
       document.getElementById("cart-send-btn").href = `https://api.whatsapp.com/send/?phone=${WA_PHONE}&text=${encodeURIComponent(msg)}`;
+      updateSendButtonState();
     }
 
     const cartOverlay = document.getElementById("cart-overlay");
@@ -1396,19 +1568,36 @@
     document.getElementById("cart-clear-btn").addEventListener("click", clearCart);
 
     const fName = document.getElementById("cart-f-name");
+    const fDay = document.getElementById("cart-f-day");
     const fTime = document.getElementById("cart-f-time");
     const fAddress = document.getElementById("cart-f-address");
     const fPhone = document.getElementById("cart-f-phone");
+
+    function populateDaySelect() {
+      const selected = fDay.value || cartForm.day;
+      fDay.innerHTML = DAY_KEYS.map((key, idx) => `<option value="${idx}">${t(key)}</option>`).join("");
+      fDay.value = selected;
+    }
+    populateDaySelect();
+
     fName.value = cartForm.name;
+    fDay.value = cartForm.day;
     fTime.value = cartForm.time;
     fAddress.value = cartForm.address;
     fPhone.value = cartForm.phone;
-    [[fName, "name"], [fTime, "time"], [fAddress, "address"], [fPhone, "phone"]].forEach(([el, key]) => {
+    [[fName, "name"], [fDay, "day"], [fTime, "time"], [fAddress, "address"], [fPhone, "phone"]].forEach(([el, key]) => {
       el.addEventListener("input", () => {
         cartForm[key] = el.value;
         localStorage.setItem(`ags-cart-${key}`, el.value);
         buildSendLink();
       });
+      if (el === fDay) {
+        el.addEventListener("change", () => {
+          cartForm.day = el.value;
+          localStorage.setItem("ags-cart-day", el.value);
+          buildSendLink();
+        });
+      }
     });
 
     document.getElementById("cart-send-btn").addEventListener("click", (e) => {
@@ -1417,7 +1606,8 @@
         alert(t("cart_fill_required"));
         return;
       }
-      if (cart.length === 0) {
+      const { timeOk, phoneOk } = updateSendButtonState();
+      if (!timeOk || !phoneOk || cart.length === 0) {
         e.preventDefault();
       }
     });
