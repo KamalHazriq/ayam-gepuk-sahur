@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <rect width="300" height="300" fill="#FDF9F8"/>
+  <rect x="8" y="8" width="284" height="284" fill="none" stroke="#1a1208" stroke-width="4" stroke-dasharray="10 8" rx="20"/>
+  <g transform="translate(150,120)" fill="none" stroke="#1a1208" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-55 45 L0 -55 L55 45 Z"/>
+    <path d="M0 -55 L0 45"/>
+    <path d="M-22 45 L0 -8 L22 45"/>
+  </g>
+  <text x="150" y="205" font-family="Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1a1208" text-anchor="middle">Letak Gambar Khemah</text>
+  <text x="150" y="232" font-family="Segoe UI, sans-serif" font-size="15" font-weight="600" fill="#5c4a33" text-anchor="middle">di sini (tent photo)</text>
+</svg>
